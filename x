@@ -409,4 +409,111 @@ int main() {
 }
 
 
+//pfifo
+
+#include <stdio.h>
+
+int main() {
+    int n, m;
+    printf("Enter the number of string values: ");
+    scanf("%d", &n);
+    int string[n];
+
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter value %d: ", i + 1);
+        scanf("%d", &string[i]);
+    }
+
+    printf("Enter the number of frames: ");
+    scanf("%d", &m);
+    int frames[m];
+
+    for (int i = 0; i < m; i++) {
+        frames[i] = -1; // Correctly initialize frames array
+    }
+
+    int hit = 0, fault = 0;
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        int found = 0;
+        for (int j = 0; j < m; j++) {
+            if (frames[j] == string[i]) {
+                found = 1;
+                hit++;
+                break;
+            }
+        }
+
+        if (!found) {
+            frames[count] = string[i];
+            count++;
+            if (count == m) {
+                count = 0;
+            }
+            fault++;
+        }
+    }
+ 
+    printf("Hits: %d, Faults: %d\n", hit, fault);
+    return 0;
+}
+
+//pagging
+
+#include <stdio.h>
+#include <conio.h>
+int main()
+{
+    int ms, ps, nop, np, rempages, i, j, x, y, pa, offset;
+    int s[10], fno[10][20];
+
+    printf("\nEnter the memory size -- ");
+    scanf("%d", &ms);
+
+    printf("\nEnter the page size -- ");
+    scanf("%d", &ps);
+
+    nop = ms / ps;
+    printf("\nThe no. of pages available in memory are -- %d ", nop);
+
+    printf("\nEnter number of processes -- ");
+    scanf("%d", &np);
+    rempages = nop;
+    for (i = 1; i <= np; i++)
+
+    {
+
+        printf("\nEnter no. of pages required for p[%d]-- ", i);
+        scanf("%d", &s[i]);
+
+        if (s[i] > rempages)
+        {
+
+            printf("\nMemory is Full");
+            break;
+        }
+        rempages = rempages - s[i];
+
+        printf("\nEnter pagetable for p[%d] --- ", i);
+        for (j = 0; j < s[i]; j++)
+            scanf("%d", &fno[i][j]);
+    }
+
+    printf("\nEnter Logical Address to find Physical Address ");
+    printf("\nEnter process no. and pagenumber and offset -- ");
+
+    scanf("%d %d %d", &x, &y, &offset);
+
+    if (x > np || y >= s[i] || offset >= ps)
+        printf("\nInvalid Process or Page Number or offset");
+
+    else
+    {
+        pa = fno[x][y] * ps + offset;
+        printf("\nThe Physical Address is -- %d", pa);
+    }
+}
+
+
 
